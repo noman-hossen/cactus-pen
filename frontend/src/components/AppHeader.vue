@@ -42,6 +42,7 @@ export default {
   justify-content: space-between;
   position: relative;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border-radius: 1.5rem;
 }
 
 /* Liquid glass effect with gradient border */
@@ -98,6 +99,7 @@ export default {
 .nav-links {
   display: flex;
   list-style: none;
+  justify-content: ;
   gap: 2rem;
   margin: 0 2rem;
   padding: 0;
@@ -185,7 +187,7 @@ export default {
   .nav-links {
     order: 3;
     width: 100%;
-    justify-content: center;
+    justify-content: space-around;
     margin: 1rem 0 0;
     gap: 1.5rem;
   }
