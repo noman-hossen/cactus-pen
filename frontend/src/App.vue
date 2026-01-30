@@ -7,20 +7,26 @@
         <GeneratorHeader />
         
         <TopicInput />
+        
         <OptionsDropdowns />
         
         <GenerateButton />
+        
         <ErrorMessage />
         
         <GeneratorOutput />
+        
         <LoadingState />
       </div>
     </div>
+    
+    <AppFooter />
   </div>
 </template>
 
 <script setup>
 import AppHeader from './components/AppHeader.vue'
+import AppFooter from './components/AppFooter.vue'
 import GeneratorHeader from './components/GeneratorHeader.vue'
 import TopicInput from './components/TopicInput.vue'
 import OptionsDropdowns from './components/OptionsDropdowns.vue'
@@ -31,7 +37,7 @@ import LoadingState from './components/LoadingState.vue'
 </script>
 
 <style>
-/* Global styles with new color palette */
+/* Same global styles as before */
 * {
   margin: 0;
   padding: 0;
@@ -44,15 +50,14 @@ html, body {
   overflow-x: hidden;
 }
 
-/* Color Palette Variables */
 :root {
-  --primary-dark: #0aecd0;    /* AOECDO -> 0AECD0 */
-  --primary-light: #94ddbc;   /* 94DDBC */
-  --secondary-light: #88bb92; /* 88BB92 */
-  --secondary-dark: #7b886b;  /* 7B886B */
+  --primary-dark: #0aecd0;
+  --primary-light: #94ddbc;
+  --secondary-light: #88bb92;
+  --secondary-dark: #7b886b;
   --text-light: #f5f9f7;
   --text-dark: #1a2a24;
-  --glass-bg: rgba(149, 221, 188, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.92);
   --glass-border: rgba(138, 187, 146, 0.2);
 }
 
@@ -64,7 +69,6 @@ body {
   color: var(--text-dark);
 }
 
-/* App wrapper */
 .app {
   min-height: 100vh;
   display: flex;
@@ -79,16 +83,17 @@ body {
 }
 
 .generator-wireframe {
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
   padding: 40px;
   border-radius: 16px;
-  box-shadow: 0 12px 48px rgba(123, 136, 107, 0.2);
+  box-shadow: 0 12px 48px rgba(123, 136, 107, 0.15);
   position: relative;
   min-height: 400px;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  border: 1px solid var(--glass-border);
   animation: fadeIn 0.5s ease-out;
 }
 
