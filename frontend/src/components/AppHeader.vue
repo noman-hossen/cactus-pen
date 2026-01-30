@@ -72,7 +72,7 @@ export default {
 .app-title {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: #d4a373;
   letter-spacing: 0.5px;
 }
 
@@ -80,13 +80,14 @@ export default {
 .nav-links {
   display: flex;
   list-style: none;
+  justify-content: space-around;
   gap: 2rem;
   margin: 0 2rem;
   padding: 0;
 }
 
 .nav-link {
-  color: var(--text-dark);
+  color: #363d1c;
   text-decoration: none;
   font-weight: 500;
   font-size: 1.05rem;

@@ -4,8 +4,17 @@
     :disabled="store.loading || !store.topic.trim()"
     class="generate-btn"
   >
-    <span v-if="store.loading" class="spinner-small"></span>
-    {{ store.loading ? 'Generating...' : 'Generate' }}
+    <svg v-if="store.loading" class="spinner-svg" viewBox="0 0 50 50">
+      <circle
+        class="spinner-circle"
+        cx="25"
+        cy="25"
+        r="20"
+        fill="none"
+        stroke-width="4"
+      />
+    </svg>
+    <span>{{ store.loading ? 'Generating...' : 'Generate' }}</span>
   </button>
 </template>
 
@@ -43,18 +52,37 @@ const store = useGeneratorStore()
   cursor: not-allowed;
 }
 
-.spinner-small {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top: 2px solid var(--white);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.spinner-svg {
+  width: 20px;
+  height: 20px;
+  animation: rotate 2s linear infinite;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.spinner-circle {
+  stroke: var(--text-dark);
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
 }
 
 @media (max-width: 768px) {

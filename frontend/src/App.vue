@@ -33,7 +33,6 @@ import OptionsDropdowns from './components/OptionsDropdowns.vue'
 import GenerateButton from './components/GenerateButton.vue'
 import ErrorMessage from './components/ErrorMessage.vue'
 import GeneratorOutput from './components/GeneratorOutput.vue'
-import LoadingState from './components/LoadingState.vue'
 </script>
 
 <style>
@@ -52,20 +51,28 @@ html, body {
 
 /* Color Palette */
 :root {
-  --primary-dark: #0aecd0;
-  --primary-light: #94ddbc;
-  --secondary-light: #88bb92;
-  --secondary-dark: #7b886b;
-  --text-dark: #1a2a24;
-  --text-muted: #6b7c6d;
+  /* Brand / Primary */
+  --primary-dark: #d4a373;     /* cactus green (main actions, logo text) */
+  --primary-light: #e8f5ef;    /* soft mint background accents */
+
+  /* Secondary */
+  --secondary-dark: #c28b3c;   /* warm sand / pencil wood */
+  --secondary-light: #f2d6a2;  /* light sand for cards / highlights */
+
+  /* Text */
+  --text-dark: #1e2a26;        /* near-black green (main text) */
+  --text-muted: #5f6f68;       /* secondary text, placeholders */
+
+  /* Neutrals */
   --white: #ffffff;
-  --light-gray: #f8f9fa;
-  --border-color: #e0e7e2;
+  --light-gray: #f7f4ef;       /* page background */
+  --border-color: #d9e2db;     /* subtle borders */
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background: #f4f4f4;
+background: #ffb88e;
+
   min-height: 100vh;
   padding: 40px;
   color: var(--text-dark);

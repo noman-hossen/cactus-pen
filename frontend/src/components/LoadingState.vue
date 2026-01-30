@@ -1,8 +1,14 @@
 <template>
-  <div v-if="store.loading" class="loading-state">
-    <div class="spinner"></div>
-    <p>AI is crafting your content...</p>
-  </div>
+  <svg v-if="store.loading" class="spinner-svg" viewBox="0 0 50 50">
+    <circle
+      class="spinner-circle"
+      cx="25"
+      cy="25"
+      r="20"
+      fill="none"
+      stroke-width="4"
+    />
+  </svg>
 </template>
 
 <script setup>
@@ -12,39 +18,36 @@ const store = useGeneratorStore()
 </script>
 
 <style scoped>
-.loading-state {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.9);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  z-index: 10;
+.spinner-svg {
+  width: 20px;
+  height: 20px;
+  animation: rotate 2s linear infinite;
 }
 
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid var(--primary-dark);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 15px;
+.spinner-circle {
+  stroke: var(--text-dark);
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
 }
 
-.loading-state p {
-  color: var(--text-dark);
-  font-size: 16px;
-  font-weight: 500;
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
 }
 </style>
