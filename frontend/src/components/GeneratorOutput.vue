@@ -1,7 +1,7 @@
 <template>
   <div v-if="store.showOutput" class="output-section">
     <div class="output-header">
-      <h2>📝 Generated Output</h2>
+      <h2>Generated Output</h2>
       <div class="output-stats">
         <div class="stat-badge">
           <i class="fas fa-font"></i>
@@ -15,42 +15,27 @@
           <i class="fas fa-volume-up"></i>
           <span>{{ store.tone }}</span>
         </div>
-        <div class="stat-badge">
-          <i class="fas fa-chart-line"></i>
-          <span>{{ store.difficulty }}</span>
-        </div>
       </div>
     </div>
     
     <div class="output-content">
       <div class="content-wrapper">
-        <pre>{{ store.result }}</pre>
+        <p>{{ store.result }}</p>
       </div>
-      <div class="copy-action">
-        <button @click="handleCopy" class="copy-btn">
-          <i class="fas fa-copy"></i>
-          Copy to Clipboard
-        </button>
-      </div>
-    </div>
-    
-    <!-- Export Actions -->
-    <div class="export-actions">
-      <h3>Export Options</h3>
       <div class="action-buttons">
-        <button @click="store.downloadTXT()" class="action-btn txt">
+        <button @click="handleCopy" class="action-btn">
+          <i class="fas fa-copy"></i>
+          <span>Copy Text</span>
+        </button>
+        
+        <button @click="store.downloadTXT()" class="action-btn">
           <i class="fas fa-file-alt"></i>
-          <span>TXT File</span>
+          <span>Save as TXT</span>
         </button>
         
         <button @click="store.downloadPDF()" class="action-btn primary">
           <i class="fas fa-file-pdf"></i>
-          <span>PDF Export</span>
-        </button>
-        
-        <button @click="store.shareContent()" class="action-btn share">
-          <i class="fas fa-share-alt"></i>
-          <span>Share</span>
+          <span>Export as PDF</span>
         </button>
         
         <button @click="store.generateNew()" class="action-btn secondary">
@@ -76,49 +61,39 @@ const handleCopy = async () => {
 </script>
 
 <style scoped>
-/* Updated Color Palette with Better Contrast */
 :root {
-  --primary-dark: #00BFA5;
-  --primary-light: #66D9B0;
-  --secondary-light: #6B9C7D;
-  --secondary-dark: #5A6B4A;
-  --text-light: #FFFFFF;
-  --text-dark: #1A2A24;
-  --text-muted: #4A5C52;
-  --glass-bg: rgba(255, 255, 255, 0.95);
-  --glass-border: rgba(102, 217, 176, 0.3);
-  --accent-blue: #4A90E2;
-  --accent-orange: #FF6B6B;
-  --accent-purple: #9B59B6;
+  --text-dark: #1a2a24;
+  --text-muted: #6b7c6d;
+  --border-color: #e0e7e2;
+  --primary-dark: #0aecd0;
+  --primary-light: #94ddbc;
+  --secondary-light: #88bb92;
+  --white: #ffffff;
+  --light-gray: #f8f9fa;
 }
 
 .output-section {
-  margin-top: 40px;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-  border: 2px solid var(--glass-border);
+  margin-top: 30px;
+  padding: 25px;
+  background: var(--light-gray);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
   animation: fadeIn 0.5s ease;
-  color: var(--text-dark);
-  box-shadow: 0 8px 32px rgba(90, 107, 74, 0.15);
 }
 
 .output-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
   gap: 15px;
 }
 
 .output-header h2 {
-  color: var(--secondary-dark);
-  font-size: 1.5rem;
+  color: var(--text-dark);
+  font-size: 1.4rem;
   margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .output-stats {
@@ -128,17 +103,16 @@ const handleCopy = async () => {
 }
 
 .stat-badge {
-  padding: 8px 14px;
-  background: linear-gradient(135deg, rgba(102, 217, 176, 0.15), rgba(0, 191, 165, 0.1));
+  padding: 6px 12px;
+  background: var(--white);
   border-radius: 20px;
   font-size: 0.85em;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-dark);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .stat-badge i {
@@ -147,147 +121,72 @@ const handleCopy = async () => {
 }
 
 .output-content {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  margin-bottom: 30px;
-  border: 1px solid rgba(90, 107, 74, 0.1);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  background: var(--white);
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
 }
 
 .content-wrapper {
-  background: #f8f9f8;
-  padding: 25px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  max-height: 400px;
-  overflow-y: auto;
-  border: 1px solid rgba(90, 107, 74, 0.08);
+  margin-bottom: 25px;
 }
 
-.content-wrapper pre {
+.content-wrapper p {
   white-space: pre-wrap;
   word-wrap: break-word;
   line-height: 1.7;
   color: var(--text-dark);
   font-size: 1.05em;
   margin: 0;
-  font-family: inherit;
-}
-
-.copy-action {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.copy-btn {
-  padding: 12px 24px;
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
-  color: var(--text-dark);
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 4px 12px rgba(0, 191, 165, 0.2);
-}
-
-.copy-btn:hover {
-  background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 191, 165, 0.3);
-}
-
-.copy-btn:active {
-  transform: translateY(0);
-}
-
-/* Export Actions */
-.export-actions {
-  padding-top: 25px;
-  border-top: 2px solid rgba(102, 217, 176, 0.2);
-}
-
-.export-actions h3 {
-  margin-bottom: 25px;
-  color: var(--secondary-dark);
-  font-size: 1.3rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .action-buttons {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
 }
 
 .action-btn {
-  padding: 16px;
-  border: 2px solid rgba(90, 107, 74, 0.2);
-  background: white;
+  padding: 14px;
+  border: 2px solid var(--border-color);
+  background: var(--white);
   color: var(--text-dark);
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  gap: 10px;
 }
 
 .action-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(90, 107, 74, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-light);
 }
 
 .action-btn.primary {
   border-color: var(--primary-dark);
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+  background: var(--primary-dark);
   color: var(--text-dark);
 }
 
 .action-btn.primary:hover {
-  border-color: var(--primary-light);
-  box-shadow: 0 8px 20px rgba(0, 191, 165, 0.3);
+  background: #09d4bc;
+  border-color: #09d4bc;
+  box-shadow: 0 5px 15px rgba(10, 236, 208, 0.2);
 }
 
 .action-btn.secondary {
   border-color: var(--secondary-light);
-  background: white;
   color: var(--secondary-light);
 }
 
 .action-btn.secondary:hover {
   background: var(--secondary-light);
-  color: white;
-  border-color: var(--secondary-light);
-}
-
-.action-btn.txt {
-  border-color: var(--accent-blue);
-  color: var(--accent-blue);
-}
-
-.action-btn.txt:hover {
-  background: var(--accent-blue);
-  color: white;
-}
-
-.action-btn.share {
-  border-color: var(--accent-purple);
-  color: var(--accent-purple);
-}
-
-.action-btn.share:hover {
-  background: var(--accent-purple);
-  color: white;
+  color: var(--white);
 }
 
 .action-btn i {
@@ -306,10 +205,6 @@ const handleCopy = async () => {
   
   .output-content {
     padding: 20px;
-  }
-  
-  .content-wrapper {
-    padding: 15px;
   }
   
   .action-buttons {

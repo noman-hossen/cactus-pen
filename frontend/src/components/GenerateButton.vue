@@ -5,7 +5,7 @@
     class="generate-btn"
   >
     <span v-if="store.loading" class="spinner-small"></span>
-    {{ store.loading ? 'Generating...' : 'Generate Content' }}
+    {{ store.loading ? 'Generating...' : 'Generate' }}
   </button>
 </template>
 
@@ -16,49 +16,38 @@ const store = useGeneratorStore()
 </script>
 
 <style scoped>
-/* Same styles as before */
-:root {
-  --primary-dark: #0aecd0;
-  --primary-light: #94ddbc;
-  --secondary-light: #88bb92;
-  --secondary-dark: #7b886b;
-}
-
 .generate-btn {
   width: 100%;
-  padding: 18px;
-  background: linear-gradient(135deg, var(--primary-dark), var(--secondary-light));
-  color: white;
+  padding: 12px;
+  background: var(--primary-dark);
   border: none;
-  border-radius: 12px;
-  font-size: 18px;
+  color: var(--text-dark);
+  border-radius: 6px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .generate-btn:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(10, 236, 208, 0.3);
+  background: #09d4bc;
 }
 
 .generate-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  transform: none !important;
-  box-shadow: none !important;
 }
 
 .spinner-small {
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top: 3px solid white;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid var(--white);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -66,5 +55,13 @@ const store = useGeneratorStore()
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .generate-btn {
+    padding: 14px;
+    font-size: 16px;
+    margin-top: 15px;
+  }
 }
 </style>

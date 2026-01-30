@@ -13,11 +13,11 @@ const store = useGeneratorStore()
 
 <style scoped>
 .error-message {
-  margin-top: 20px;
-  padding: 16px 20px;
-  background: rgba(231, 76, 60, 0.1);
+  margin-top: 15px;
+  padding: 12px 20px;
+  background: #ffeaea;
   border-left: 4px solid #e74c3c;
-  border-radius: 8px;
+  border-radius: 6px;
   color: #c0392b;
   font-size: 0.95em;
   display: flex;

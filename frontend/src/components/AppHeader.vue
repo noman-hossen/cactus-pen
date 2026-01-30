@@ -23,48 +23,30 @@ export default {
 </script>
 
 <style scoped>
-/* Color Palette */
+/* Color Palette - White Theme */
 :root {
-  --primary-dark: #0aecd0;
-  --primary-light: #94ddbc;
-  --secondary-light: #88bb92;
-  --secondary-dark: #7b886b;
-  --text-light: #f5f9f7;
-  --text-dark: #1a2a24;
-  --glass-bg: rgba(149, 221, 188, 0.08);
-  --glass-border: rgba(138, 187, 146, 0.2);
+  --primary-dark: #0aecd0;     /* Teal accent */
+  --primary-light: #94ddbc;    /* Light mint */
+  --secondary-light: #88bb92;  /* Sage green */
+  --secondary-dark: #7b886b;   /* Dark olive */
+  --text-dark: #1a2a24;        /* Dark text */
+  --text-muted: #6b7c6d;       /* Muted text */
+  --white: #ffffff;
+  --light-gray: #f8f9fa;
+  --border-color: #e0e7e2;
 }
 
 .navbar {
-  background: rgba(149, 221, 188, 0.08);
-  backdrop-filter: blur(15px) saturate(100%);
-  -webkit-backdrop-filter: blur(15px) saturate(100%);
-  border-bottom: 1px solid rgba(138, 187, 146, 0.2);
-  padding: 0.8rem 2rem;
+  background: var(--white);
+  padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  box-shadow: 0 8px 32px rgba(123, 136, 107, 0.2);
-  border-radius: 1.5rem;
-  margin-bottom: 20px;
-}
-
-/* Liquid glass effect with gradient border using new colors */
-.navbar::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(10, 236, 208, 0.5), 
-    rgba(148, 221, 188, 0.5), 
-    rgba(10, 236, 208, 0.5), 
-    transparent
-  );
+  box-shadow: 0 4px 20px rgba(123, 136, 107, 0.08);
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 1px solid var(--border-color);
 }
 
 /* Logo container */
@@ -76,25 +58,21 @@ export default {
 
 /* SVG Logo styling */
 .logo-svg {
-  width: 42px;
-  height: 42px;
-  filter: drop-shadow(0 0 8px rgba(10, 236, 208, 0.4));
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 2px 4px rgba(10, 236, 208, 0.2));
   transition: all 0.3s ease;
 }
 
 .logo-svg:hover {
-  filter: drop-shadow(0 0 12px rgba(148, 221, 188, 0.6));
+  filter: drop-shadow(0 4px 8px rgba(10, 236, 208, 0.4));
   transform: scale(1.05);
 }
 
 .app-title {
   font-size: 1.8rem;
   font-weight: 700;
-  background: linear-gradient(90deg, var(--primary-dark), var(--primary-light), var(--primary-dark));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 20px rgba(148, 221, 188, 0.3);
+  color: var(--text-dark);
   letter-spacing: 0.5px;
 }
 
@@ -108,13 +86,14 @@ export default {
 }
 
 .nav-link {
-  color: rgba(245, 249, 247, 0.9);
+  color: var(--text-dark);
   text-decoration: none;
   font-weight: 500;
   font-size: 1.05rem;
   padding: 0.5rem 0;
   position: relative;
   transition: all 0.3s ease;
+  opacity: 0.8;
 }
 
 .nav-link::after {
@@ -124,14 +103,14 @@ export default {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--primary-dark), var(--primary-light));
+  background: var(--primary-dark);
   transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   border-radius: 2px;
 }
 
 .nav-link:hover {
-  color: #ffffff;
-  text-shadow: 0 0 10px rgba(148, 221, 188, 0.5);
+  color: var(--text-dark);
+  opacity: 1;
 }
 
 .nav-link:hover::after {
@@ -140,43 +119,28 @@ export default {
 
 /* CTA Button */
 .cta-button {
-  background: rgba(148, 221, 188, 0.15);
-  border: 1px solid rgba(138, 187, 146, 0.3);
-  color: #e6f7ef;
+  background: var(--primary-dark);
+  border: none;
+  color: var(--text-dark);
   padding: 0.7rem 1.8rem;
-  border-radius: 50px;
+  border-radius: 8px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.4s ease;
-  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   z-index: 1;
 }
 
-.cta-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(148, 221, 188, 0.2), transparent);
-  transition: left 0.7s ease;
-  z-index: -1;
-}
-
 .cta-button:hover {
-  background: rgba(148, 221, 188, 0.25);
-  border-color: rgba(138, 187, 146, 0.6);
-  color: #ffffff;
-  box-shadow: 0 0 20px rgba(148, 221, 188, 0.3);
+  background: #09d4bc;
   transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(10, 236, 208, 0.2);
 }
 
-.cta-button:hover::before {
-  left: 100%;
+.cta-button:active {
+  transform: translateY(0);
 }
 
 /* Mobile responsiveness */
@@ -184,13 +148,14 @@ export default {
   .navbar {
     padding: 0.8rem 1rem;
     flex-wrap: wrap;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
   }
   
   .nav-links {
     order: 3;
     width: 100%;
-    justify-content: space-around;
+    justify-content: center;
     margin: 1rem 0 0;
     gap: 1.5rem;
   }
@@ -198,12 +163,21 @@ export default {
   .app-title {
     font-size: 1.5rem;
   }
+  
+  .logo-svg {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .cta-button {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 480px) {
   .navbar {
-    padding: 0.6rem 0.8rem;
-    border-radius: 1rem;
+    padding: 0.7rem 0.9rem;
   }
   
   .nav-links {
@@ -220,13 +194,13 @@ export default {
   }
   
   .logo-svg {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
   
   .cta-button {
-    padding: 0.6rem 1.5rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.85rem;
   }
 }
 </style>

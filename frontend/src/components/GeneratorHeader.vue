@@ -1,7 +1,7 @@
 <template>
   <div class="generator-header">
-    <h1>Generate Paragraphs with AI! 🌵</h1>
-    <p class="subtitle">Input a topic and instantly get AI-generated content</p>
+    <h1>Generate Paragraphs with AI</h1>
+    <p class="subtitle">Enter a topic and generate AI text.</p>
   </div>
 </template>
 
@@ -11,29 +11,26 @@
 
 <style scoped>
 :root {
-  --primary-dark: #0aecd0;
-  --primary-light: #94ddbc;
-  --secondary-light: #88bb92;
-  --secondary-dark: #7b886b;
   --text-dark: #1a2a24;
+  --text-muted: #6b7c6d;
+  --primary-dark: #0aecd0;
+}
+
+.generator-header {
+  margin-bottom: 30px;
 }
 
 .generator-header h1 {
-  margin-bottom: 12px;
-  color: var(--text-dark);
+  margin-bottom: 8px;
   font-size: 2.2rem;
   font-weight: 700;
-  background: linear-gradient(90deg, var(--primary-dark), var(--secondary-light));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--text-dark);
 }
 
 .subtitle {
-  color: var(--secondary-dark);
-  margin-bottom: 35px;
+  color: var(--text-muted);
   font-size: 1.1rem;
-  opacity: 0.8;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
