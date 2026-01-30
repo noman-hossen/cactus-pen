@@ -37,8 +37,8 @@ export default {
 
 .navbar {
   background: rgba(149, 221, 188, 0.08);
-  backdrop-filter: blur(15px) saturate(180%);
-  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  backdrop-filter: blur(15px) saturate(100%);
+  -webkit-backdrop-filter: blur(15px) saturate(100%);
   border-bottom: 1px solid rgba(138, 187, 146, 0.2);
   padding: 0.8rem 2rem;
   display: flex;

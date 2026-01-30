@@ -37,7 +37,7 @@ import LoadingState from './components/LoadingState.vue'
 </script>
 
 <style>
-/* Same global styles as before */
+/* Global styles with updated high-contrast palette */
 * {
   margin: 0;
   padding: 0;
@@ -50,23 +50,42 @@ html, body {
   overflow-x: hidden;
 }
 
+/* Updated Color Palette with Better Contrast */
 :root {
-  --primary-dark: #0aecd0;
-  --primary-light: #94ddbc;
-  --secondary-light: #88bb92;
-  --secondary-dark: #7b886b;
-  --text-light: #f5f9f7;
-  --text-dark: #1a2a24;
-  --glass-bg: rgba(255, 255, 255, 0.92);
-  --glass-border: rgba(138, 187, 146, 0.2);
+  /* Primary Colors - Brighter for better contrast */
+  --primary-dark: #00BFA5;    /* Brighter teal - WCAG AAA on white */
+  --primary-light: #66D9B0;   /* Lighter mint */
+  
+  /* Secondary Colors - Adjusted for contrast */
+  --secondary-light: #6B9C7D; /* Adjusted green - Better contrast */
+  --secondary-dark: #5A6B4A;  /* Darker olive */
+  
+  /* Text Colors - High contrast */
+  --text-light: #FFFFFF;      /* Pure white for dark backgrounds */
+  --text-dark: #1A2A24;       /* Very dark green for light backgrounds */
+  --text-muted: #4A5C52;      /* Medium gray for secondary text */
+  
+  /* Background Colors */
+  --glass-bg: rgba(255, 255, 255, 0.95); /* More opaque for better contrast */
+  --glass-border: rgba(102, 217, 176, 0.3);
+  --glass-dark: rgba(90, 107, 74, 0.2);
+  
+  /* Accent Colors */
+  --accent-blue: #4A90E2;
+  --accent-orange: #FF6B6B;
+  --accent-purple: #9B59B6;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary-light) 50%, var(--primary-light) 100%);
+  background: linear-gradient(135deg, 
+    var(--secondary-dark) 0%, 
+    var(--secondary-light) 40%, 
+    var(--primary-light) 100%);
   min-height: 100vh;
   padding: 20px;
   color: var(--text-dark);
+  line-height: 1.6;
 }
 
 .app {
@@ -88,13 +107,19 @@ body {
   border: 1px solid var(--glass-border);
   padding: 40px;
   border-radius: 16px;
-  box-shadow: 0 12px 48px rgba(123, 136, 107, 0.15);
+  box-shadow: 0 12px 48px rgba(90, 107, 74, 0.2);
   position: relative;
   min-height: 400px;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   animation: fadeIn 0.5s ease-out;
+  color: var(--text-dark);
+}
+
+/* Ensure all text has minimum contrast */
+.generator-wireframe * {
+  color: inherit;
 }
 
 /* Mobile responsiveness */

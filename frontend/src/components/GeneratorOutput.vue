@@ -38,7 +38,7 @@
     <div class="export-actions">
       <h3>Export Options</h3>
       <div class="action-buttons">
-        <button @click="store.downloadTXT()" class="action-btn">
+        <button @click="store.downloadTXT()" class="action-btn txt">
           <i class="fas fa-file-alt"></i>
           <span>TXT File</span>
         </button>
@@ -48,7 +48,7 @@
           <span>PDF Export</span>
         </button>
         
-        <button @click="store.shareContent()" class="action-btn">
+        <button @click="store.shareContent()" class="action-btn share">
           <i class="fas fa-share-alt"></i>
           <span>Share</span>
         </button>
@@ -76,24 +76,31 @@ const handleCopy = async () => {
 </script>
 
 <style scoped>
-/* Same styles as before */
+/* Updated Color Palette with Better Contrast */
 :root {
-  --primary-dark: #0aecd0;
-  --primary-light: #94ddbc;
-  --secondary-light: #88bb92;
-  --secondary-dark: #7b886b;
-  --text-dark: #1a2a24;
-  --text-light: #f5f9f7;
-  --glass-border: rgba(138, 187, 146, 0.2);
+  --primary-dark: #00BFA5;
+  --primary-light: #66D9B0;
+  --secondary-light: #6B9C7D;
+  --secondary-dark: #5A6B4A;
+  --text-light: #FFFFFF;
+  --text-dark: #1A2A24;
+  --text-muted: #4A5C52;
+  --glass-bg: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(102, 217, 176, 0.3);
+  --accent-blue: #4A90E2;
+  --accent-orange: #FF6B6B;
+  --accent-purple: #9B59B6;
 }
 
 .output-section {
   margin-top: 40px;
   padding: 30px;
-  background: rgba(148, 221, 188, 0.05);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
   border: 2px solid var(--glass-border);
   animation: fadeIn 0.5s ease;
+  color: var(--text-dark);
+  box-shadow: 0 8px 32px rgba(90, 107, 74, 0.15);
 }
 
 .output-header {
@@ -106,7 +113,7 @@ const handleCopy = async () => {
 }
 
 .output-header h2 {
-  color: var(--text-dark);
+  color: var(--secondary-dark);
   font-size: 1.5rem;
   margin: 0;
   display: flex;
@@ -122,15 +129,16 @@ const handleCopy = async () => {
 
 .stat-badge {
   padding: 8px 14px;
-  background: white;
+  background: linear-gradient(135deg, rgba(102, 217, 176, 0.15), rgba(0, 191, 165, 0.1));
   border-radius: 20px;
   font-size: 0.85em;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-dark);
   border: 1px solid var(--glass-border);
   display: flex;
   align-items: center;
   gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .stat-badge i {
@@ -143,16 +151,18 @@ const handleCopy = async () => {
   padding: 30px;
   border-radius: 10px;
   margin-bottom: 30px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(90, 107, 74, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .content-wrapper {
-  background: #f9f9f9;
+  background: #f8f9f8;
   padding: 25px;
   border-radius: 8px;
   margin-bottom: 20px;
   max-height: 400px;
   overflow-y: auto;
+  border: 1px solid rgba(90, 107, 74, 0.08);
 }
 
 .content-wrapper pre {
@@ -172,8 +182,8 @@ const handleCopy = async () => {
 
 .copy-btn {
   padding: 12px 24px;
-  background: var(--primary-light);
-  color: white;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+  color: var(--text-dark);
   border: none;
   border-radius: 8px;
   font-weight: 600;
@@ -182,23 +192,28 @@ const handleCopy = async () => {
   display: flex;
   align-items: center;
   gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 191, 165, 0.2);
 }
 
 .copy-btn:hover {
-  background: var(--primary-dark);
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(10, 236, 208, 0.2);
+  box-shadow: 0 6px 20px rgba(0, 191, 165, 0.3);
+}
+
+.copy-btn:active {
+  transform: translateY(0);
 }
 
 /* Export Actions */
 .export-actions {
   padding-top: 25px;
-  border-top: 2px solid var(--glass-border);
+  border-top: 2px solid rgba(102, 217, 176, 0.2);
 }
 
 .export-actions h3 {
   margin-bottom: 25px;
-  color: var(--text-dark);
+  color: var(--secondary-dark);
   font-size: 1.3rem;
   display: flex;
   align-items: center;
@@ -213,7 +228,7 @@ const handleCopy = async () => {
 
 .action-btn {
   padding: 16px;
-  border: 2px solid var(--glass-border);
+  border: 2px solid rgba(90, 107, 74, 0.2);
   background: white;
   color: var(--text-dark);
   border-radius: 10px;
@@ -224,33 +239,54 @@ const handleCopy = async () => {
   align-items: center;
   justify-content: center;
   gap: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
 .action-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(138, 187, 146, 0.2);
-  border-color: var(--primary-dark);
+  box-shadow: 0 8px 20px rgba(90, 107, 74, 0.15);
 }
 
 .action-btn.primary {
   border-color: var(--primary-dark);
-  background: var(--primary-dark);
-  color: white;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+  color: var(--text-dark);
 }
 
 .action-btn.primary:hover {
-  background: #09d9bf;
-  border-color: #09d9bf;
-  box-shadow: 0 8px 20px rgba(10, 236, 208, 0.3);
+  border-color: var(--primary-light);
+  box-shadow: 0 8px 20px rgba(0, 191, 165, 0.3);
 }
 
 .action-btn.secondary {
-  border-color: var(--secondary-dark);
-  color: var(--secondary-dark);
+  border-color: var(--secondary-light);
+  background: white;
+  color: var(--secondary-light);
 }
 
 .action-btn.secondary:hover {
-  background: var(--secondary-dark);
+  background: var(--secondary-light);
+  color: white;
+  border-color: var(--secondary-light);
+}
+
+.action-btn.txt {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.action-btn.txt:hover {
+  background: var(--accent-blue);
+  color: white;
+}
+
+.action-btn.share {
+  border-color: var(--accent-purple);
+  color: var(--accent-purple);
+}
+
+.action-btn.share:hover {
+  background: var(--accent-purple);
   color: white;
 }
 
@@ -261,5 +297,29 @@ const handleCopy = async () => {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .output-section {
+    padding: 20px;
+  }
+  
+  .output-content {
+    padding: 20px;
+  }
+  
+  .content-wrapper {
+    padding: 15px;
+  }
+  
+  .action-buttons {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
