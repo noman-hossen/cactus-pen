@@ -1,5 +1,7 @@
 <template>
+  <AppHeader />
   <div class="app-container">
+
     <div class="generator-wireframe">
       <GeneratorHeader />
       
@@ -16,6 +18,7 @@
 </template>
 
 <script setup>
+import AppHeader from './components/AppHeader.vue'
 import GeneratorHeader from './components/GeneratorHeader.vue'
 import TopicInput from './components/TopicInput.vue'
 import OptionsDropdowns from './components/OptionsDropdowns.vue'
