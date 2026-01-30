@@ -1,7 +1,6 @@
 <template>
   <nav class="navbar">
     <div class="logo-container">
-      <!-- If your SVG is an image, keep as is. If it's inline SVG, update accordingly -->
       <img src="../assets/cactus-pen-logo.svg" alt="Cactus Pen Logo" class="logo-svg">
       <span class="app-title">Cactus-Pen</span>
     </div>
@@ -66,7 +65,6 @@ export default {
 .logo-container {
   display: flex;
   align-items: center;
-  justify-content: space-between ;
   gap: 1rem;
 }
 
@@ -99,7 +97,6 @@ export default {
 .nav-links {
   display: flex;
   list-style: none;
-  justify-content: ;
   gap: 2rem;
   margin: 0 2rem;
   padding: 0;
@@ -110,7 +107,7 @@ export default {
   text-decoration: none;
   font-weight: 500;
   font-size: 1.05rem;
-  padding:  0;
+  padding: 0.5rem 0;
   position: relative;
   transition: all 0.3s ease;
 }
@@ -194,6 +191,36 @@ export default {
   
   .app-title {
     font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.6rem 0.8rem;
+    border-radius: 1rem;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .nav-link {
+    font-size: 0.95rem;
+    padding: 0.3rem 0;
+  }
+  
+  .app-title {
+    font-size: 1.3rem;
+  }
+  
+  .logo-svg {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .cta-button {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
 </style>
