@@ -1,68 +1,57 @@
 ﻿import { Hono } from 'hono';
 import { hfService } from '../services/hf';
 
-// Create a new Hono app for this route
 const app = new Hono();
 
 app.post('/generate', async (c) => {
   try {
     const body = await c.req.json();
-    const { prompt, model, max_tokens } = body;
+    
+    // Accept both "topic" and "prompt" for compatibility
+    const topic = body.topic || body.prompt;
+    const { contentType = 'paragraph', tone = 'academic', wordCount = 250 } = body;
 
-    // Validation
-    if (!prompt || typeof prompt !== 'string' || prompt.trim().length === 0) {
+    if (!topic || typeof topic !== 'string' || topic.trim().length === 0) {
       return c.json(
-        { success: false, message: 'Prompt is required and must be a non-empty string' },
+        { success: false, message: 'Topic is required' },
         400
       );
     }
 
-    console.log(`Generating with prompt: "${prompt.substring(0, 50)}..."`);
+    console.log(`Generating ${contentType} about: "${topic}"`);
 
-    const result = await hfService.generate(
-      prompt.trim(),
-      model,
-      max_tokens
-    );
+    // Build the prompt using your EXACT structure
+    const prompt = `write a ${contentType} about ${topic} around ${wordCount} words in a ${tone} tone`;
+
+    console.log('Sending prompt to AI:', prompt);
+    
+    // Estimate tokens (approx 1.3 tokens per word)
+    const maxTokens = Math.ceil(wordCount * 1.3);
+    
+    const result = await hfService.generate(prompt, undefined, maxTokens);
 
     return c.json({
       success: true,
       result: result,
+      prompt: prompt, // For debugging
+      metadata: {
+        contentType,
+        tone,
+        wordCount,
+        timestamp: new Date().toISOString()
+      }
     });
 
   } catch (error: any) {
     console.error('Generate route error:', error);
-
-    // Check if it's a validation error
-    if (error.message.includes('required') || error.message.includes('Prompt')) {
-      return c.json(
-        { success: false, message: error.message },
-        400
-      );
-    }
-
-    // Check if it's a Hugging Face error
-    if (error.message.includes('HF Error')) {
-      return c.json(
-        { 
-          success: false, 
-          message: 'Failed to generate paragraph',
-          error: error.message 
-        },
-        500
-      );
-    }
-
     return c.json(
       { 
         success: false, 
-        message: 'Internal server error',
-        error: process.env.NODE_ENV === 'development' ? error.message : undefined
-      },
+        message: error.message || 'Failed to generate content'
+      }, 
       500
     );
   }
 });
 
-// Export as default
 export default app;
