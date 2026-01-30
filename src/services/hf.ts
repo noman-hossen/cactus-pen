@@ -1,13 +1,17 @@
 ﻿export class HuggingFaceService {
   private apiKey: string;
   private apiUrl = 'https://router.huggingface.co/v1/chat/completions';
+  private fallbackModels = [
+    'gpt2',
+    'distilgpt2',
+    'EleutherAI/gpt-neo-125M',
+    'microsoft/DialoGPT-small'
+  ];
 
   constructor() {
     this.apiKey = process.env.HF_API_KEY || '';
     if (!this.apiKey) {
-      console.warn('HF_API_KEY is missing from environment variables');
-    } else {
-      console.log('HF_API_KEY loaded (first 5 chars):', this.apiKey.substring(0, 5) + '...');
+      console.warn('HF_API_KEY is missing');
     }
   }
 
@@ -16,51 +20,101 @@
     model?: string, 
     maxTokens?: number
   ): Promise<string> {
-    try {
-      // CORRECT MODEL NAME: Use the exact format from your working HTML
-      const targetModel = model || 'deepseek-ai/DeepSeek-V3.2:novita';
-      console.log(`Generating with model: ${targetModel}`);
-      console.log(`Prompt: "${prompt.substring(0, 50)}${prompt.length > 50 ? '...' : ''}"`);
+    const modelsToTry = [
+      model || 'deepseek-ai/DeepSeek-V3.2:novita',
+      ...this.fallbackModels
+    ];
 
-      const response = await fetch(this.apiUrl, {
+    for (const currentModel of modelsToTry) {
+      try {
+        console.log(`Trying model: ${currentModel}`);
+        
+        const result = await this.tryModel(prompt, currentModel, maxTokens);
+        
+        if (result) {
+          console.log(`✓ Success with model: ${currentModel}`);
+          return result;
+        }
+      } catch (error) {
+        console.log(`✗ Failed with ${currentModel}:`, error.message);
+        // Try next model
+      }
+    }
+    
+    throw new Error('All models failed. Please try again later.');
+  }
+
+  private async tryModel(
+    prompt: string,
+    model: string,
+    maxTokens?: number
+  ): Promise<string> {
+    // For gpt2 and similar models, use inference API
+    if (model.includes('gpt2') || model.includes('gpt-neo') || model.includes('DialoGPT')) {
+      return this.useInferenceAPI(prompt, model, maxTokens);
+    }
+    
+    // For chat models, use router API
+    return this.useRouterAPI(prompt, model, maxTokens);
+  }
+
+  private async useRouterAPI(
+    prompt: string,
+    model: string,
+    maxTokens?: number
+  ): Promise<string> {
+    const response = await fetch(this.apiUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${this.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: maxTokens || 300,
+        temperature: 0.7,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Router API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content?.trim() || '';
+  }
+
+  private async useInferenceAPI(
+    prompt: string,
+    model: string,
+    maxTokens?: number
+  ): Promise<string> {
+    const response = await fetch(
+      `https://api-inference.huggingface.co/models/${model}`,
+      {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: targetModel,  // Use the correct model name
-          messages: [
-            {
-              role: 'user',
-              content: prompt,
-            },
-          ],
-          max_tokens: maxTokens || 300,
-          temperature: 0.7,
+          inputs: prompt,
+          parameters: {
+            max_new_tokens: maxTokens || 300,
+            temperature: 0.7,
+            return_full_text: false,
+          }
         }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Hugging Face API error:', errorData);
-        throw new Error(`HF API Error ${response.status}: ${JSON.stringify(errorData)}`);
       }
+    );
 
-      const data = await response.json();
-      const result = data.choices?.[0]?.message?.content || '';
-      
-      if (!result) {
-        console.warn('Empty response from Hugging Face:', data);
-      }
-      
-      console.log(`Success! Generated ${result.length} characters`);
-      return result.trim();
-
-    } catch (error: any) {
-      console.error('Hugging Face service error:', error.message);
-      throw new Error(`Failed to generate: ${error.message}`);
+    if (!response.ok) {
+      throw new Error(`Inference API error: ${response.status}`);
     }
+
+    const data = await response.json();
+    return data[0]?.generated_text?.trim() || '';
   }
 }
 
