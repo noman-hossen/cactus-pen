@@ -31,7 +31,7 @@ import LoadingState from './components/LoadingState.vue'
 </script>
 
 <style>
-/* Global styles */
+/* Global styles with new color palette */
 * {
   margin: 0;
   padding: 0;
@@ -41,14 +41,27 @@ import LoadingState from './components/LoadingState.vue'
 html, body {
   height: 100%;
   width: 100%;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-x: hidden;
+}
+
+/* Color Palette Variables */
+:root {
+  --primary-dark: #0aecd0;    /* AOECDO -> 0AECD0 */
+  --primary-light: #94ddbc;   /* 94DDBC */
+  --secondary-light: #88bb92; /* 88BB92 */
+  --secondary-dark: #7b886b;  /* 7B886B */
+  --text-light: #f5f9f7;
+  --text-dark: #1a2a24;
+  --glass-bg: rgba(149, 221, 188, 0.08);
+  --glass-border: rgba(138, 187, 146, 0.2);
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary-light) 50%, var(--primary-light) 100%);
   min-height: 100vh;
   padding: 20px;
+  color: var(--text-dark);
 }
 
 /* App wrapper */
@@ -66,53 +79,45 @@ body {
 }
 
 .generator-wireframe {
-  background: white;
+  background: rgba(255, 255, 255, 0.92);
   padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 12px 48px rgba(123, 136, 107, 0.2);
   position: relative;
   min-height: 400px;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto; /* Center on large screens */
+  margin: 0 auto;
+  border: 1px solid var(--glass-border);
   animation: fadeIn 0.5s ease-out;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   body {
-    padding: 10px 15px; /* Reduce padding on mobile */
+    padding: 12px 16px;
   }
   
   .app-container {
-    padding: 10px 0;
+    padding: 12px 0;
   }
   
   .generator-wireframe {
-    padding: 25px 20px; /* Reduce padding on mobile */
-    min-height: 300px; /* Reduce minimum height on mobile */
-    border-radius: 10px; /* Slightly smaller radius */
+    padding: 28px 22px;
+    min-height: 350px;
+    border-radius: 14px;
   }
 }
 
 @media (max-width: 480px) {
   body {
-    padding: 8px 12px; /* Even smaller padding on very small screens */
+    padding: 10px 12px;
   }
   
   .generator-wireframe {
-    padding: 20px 15px; /* Even smaller padding */
-    min-height: 250px;
-  }
-}
-
-/* Ensure all child components have proper mobile styling */
-@media (max-width: 768px) {
-  /* You can add global mobile styles for child components here */
-  :deep(.component-class) {
-    /* Example: Force full width on mobile for child components */
-    width: 100% !important;
-    max-width: 100% !important;
+    padding: 24px 18px;
+    min-height: 300px;
+    border-radius: 12px;
   }
 }
 
