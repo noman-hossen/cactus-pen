@@ -56,32 +56,52 @@
       ⚠️ {{ error }}
     </div>
 
-    <!-- Debug Info (Optional - remove in production) -->
-    <div v-if="debugPrompt" class="debug-info">
-      <small>Prompt sent: "{{ debugPrompt }}"</small>
-    </div>
-
     <!-- Output Section -->
     <div v-if="showOutput" class="output-section">
-      <h2>Generated Output</h2>
+      <div class="output-header">
+        <h2>📝 Generated Output</h2>
+        <div class="output-stats">
+          <span class="stat-badge">📊 {{ wordCount }} words</span>
+          <span class="stat-badge">📄 {{ contentType }}</span>
+          <span class="stat-badge">🎭 {{ tone }}</span>
+        </div>
+      </div>
+      
       <div class="output-content">
         <p>{{ result }}</p>
       </div>
       
-      <div class="output-actions">
-        <button @click="copyToClipboard" class="action-btn">
-          📋 Copy
-        </button>
-        <button @click="generateNew" class="action-btn secondary">
-          🔄 New
-        </button>
+      <!-- Export Actions -->
+      <div class="export-actions">
+        <h3>📤 Export Options</h3>
+        <div class="action-buttons">
+          <button @click="copyToClipboard" class="action-btn">
+            <span class="btn-icon">📋</span>
+            <span>Copy Text</span>
+          </button>
+          
+          <button @click="downloadPDF" class="action-btn primary">
+            <span class="btn-icon">📄</span>
+            <span>Export as PDF</span>
+          </button>
+          
+          <button @click="downloadTXT" class="action-btn">
+            <span class="btn-icon">📝</span>
+            <span>Save as TXT</span>
+          </button>
+          
+          <button @click="generateNew" class="action-btn secondary">
+            <span class="btn-icon">🔄</span>
+            <span>New Content</span>
+          </button>
+        </div>
       </div>
     </div>
 
     <!-- Loading State -->
     <div v-if="loading" class="loading-state">
       <div class="spinner"></div>
-      <p>AI is writing...</p>
+      <p>AI is writing your content...</p>
     </div>
   </div>
 </template>
@@ -95,7 +115,6 @@ const contentType = ref('paragraph')
 const tone = ref('academic')
 const length = ref('medium')
 const result = ref('')
-const debugPrompt = ref('')
 const loading = ref(false)
 const showOutput = ref(false)
 const error = ref('')
@@ -109,14 +128,16 @@ const lengthMap = {
   long: 500
 }
 
+// Computed properties
+const wordCount = computed(() => {
+  return result.value ? result.value.trim().split(/\s+/).length : 0
+})
+
 const generateContent = async () => {
-  // Reset
   error.value = ''
   result.value = ''
   showOutput.value = false
-  debugPrompt.value = ''
   
-  // Validation
   if (!topic.value.trim()) {
     error.value = 'Please enter a topic'
     return
@@ -127,19 +148,11 @@ const generateContent = async () => {
   try {
     const wordCount = lengthMap[length.value] || 250
     
-    // Build the EXACT prompt structure you requested
-    const prompt = `write a ${contentType.value} about ${topic.value} around ${wordCount} words in a ${tone.value} tone`
-    debugPrompt.value = prompt // For debugging
-    
-    console.log('Sending prompt:', prompt)
-    
-    // Send to backend
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        topic: topic.value,           // Send topic
-        prompt: prompt,               // Also send the constructed prompt
+        topic: topic.value,
         contentType: contentType.value,
         tone: tone.value,
         wordCount: wordCount
@@ -147,7 +160,6 @@ const generateContent = async () => {
     })
 
     const data = await response.json()
-    console.log('Response:', data)
 
     if (!response.ok) {
       throw new Error(data.message || `HTTP error ${response.status}`)
@@ -163,50 +175,173 @@ const generateContent = async () => {
   } catch (err) {
     console.error('Error:', err)
     error.value = `Error: ${err.message}`
-    
-    // Test with direct fetch to debug
-    await testBackendConnection()
   } finally {
     loading.value = false
-  }
-}
-
-// Debug function to test backend
-const testBackendConnection = async () => {
-  try {
-    console.log('Testing backend connection...')
-    
-    // Test health endpoint
-    const health = await fetch('http://localhost:3000/')
-    console.log('Health check:', await health.text())
-    
-    // Test with simple prompt
-    const testResponse = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        prompt: 'write a paragraph about AI around 100 words in a casual tone'
-      })
-    })
-    
-    const testData = await testResponse.json()
-    console.log('Test response:', testData)
-    
-    if (testResponse.ok) {
-      error.value = 'Backend works! Try your topic again.'
-    }
-  } catch (testErr) {
-    console.error('Backend test failed:', testErr)
-    error.value = `Cannot connect to backend at ${API_URL}. Make sure it's running.`
   }
 }
 
 const copyToClipboard = async () => {
   try {
     await navigator.clipboard.writeText(result.value)
-    alert('✅ Copied!')
+    alert('✅ Copied to clipboard!')
   } catch (err) {
-    error.value = 'Failed to copy'
+    error.value = 'Failed to copy to clipboard'
+  }
+}
+
+const downloadTXT = () => {
+  const content = `
+CACTUS-PEN AI GENERATED CONTENT
+================================
+Topic: ${topic.value}
+Type: ${contentType.value}
+Tone: ${tone.value}
+Length: ${length.value}
+Word Count: ${wordCount.value}
+Generated: ${new Date().toLocaleString()}
+
+${result.value}
+================================
+Generated by CactusPen AI - Free AI writing assistant
+  `
+  
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `cactuspen-${Date.now()}.txt`
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
+}
+
+const downloadPDF = () => {
+  try {
+    // Create a simple HTML page for printing
+    const pdfContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>CactusPen AI - Generated Content</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          color: #333;
+        }
+        .header {
+          text-align: center;
+          margin-bottom: 30px;
+          padding-bottom: 20px;
+          border-bottom: 3px solid #2ecc71;
+        }
+        .header h1 {
+          color: #2c3e50;
+          margin-bottom: 10px;
+        }
+        .metadata {
+          background: #f8f9fa;
+          padding: 15px;
+          border-radius: 8px;
+          margin-bottom: 30px;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 10px;
+        }
+        .metadata-item {
+          display: flex;
+          flex-direction: column;
+        }
+        .metadata-label {
+          font-weight: bold;
+          color: #666;
+          font-size: 0.9em;
+        }
+        .metadata-value {
+          font-size: 1.1em;
+          color: #2c3e50;
+        }
+        .content {
+          font-size: 14px;
+          line-height: 1.8;
+          text-align: justify;
+        }
+        .footer {
+          margin-top: 50px;
+          padding-top: 20px;
+          border-top: 1px solid #eee;
+          text-align: center;
+          color: #666;
+          font-size: 0.9em;
+        }
+        @media print {
+          body {
+            padding: 0;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <h1>🌵 CactusPen AI</h1>
+        <p>AI-Powered Writing Assistant</p>
+      </div>
+      
+      <div class="metadata">
+        <div class="metadata-item">
+          <span class="metadata-label">Topic:</span>
+          <span class="metadata-value">${topic.value}</span>
+        </div>
+        <div class="metadata-item">
+          <span class="metadata-label">Content Type:</span>
+          <span class="metadata-value">${contentType.value}</span>
+        </div>
+        <div class="metadata-item">
+          <span class="metadata-label">Tone:</span>
+          <span class="metadata-value">${tone.value}</span>
+        </div>
+        <div class="metadata-item">
+          <span class="metadata-label">Word Count:</span>
+          <span class="metadata-value">${wordCount.value}</span>
+        </div>
+        <div class="metadata-item">
+          <span class="metadata-label">Generated:</span>
+          <span class="metadata-value">${new Date().toLocaleString()}</span>
+        </div>
+      </div>
+      
+      <div class="content">
+        ${result.value.replace(/\n/g, '<br>')}
+      </div>
+      
+      <div class="footer">
+        <p>Generated by CactusPen AI - Free AI writing assistant for students</p>
+        <p>🌵 No login required • 📄 PDF Export • 🔒 Privacy First</p>
+      </div>
+    </body>
+    </html>
+    `
+    
+    // Open print dialog
+    const printWindow = window.open('', '_blank')
+    printWindow.document.write(pdfContent)
+    printWindow.document.close()
+    
+    // Wait for content to load, then trigger print
+    printWindow.onload = function() {
+      printWindow.print()
+      printWindow.onafterprint = function() {
+        printWindow.close()
+      }
+    }
+    
+  } catch (err) {
+    console.error('PDF generation error:', err)
+    error.value = 'Failed to generate PDF. Please try again.'
   }
 }
 
@@ -215,6 +350,9 @@ const generateNew = () => {
   result.value = ''
   showOutput.value = false
   error.value = ''
+  contentType.value = 'paragraph'
+  tone.value = 'academic'
+  length.value = 'medium'
 }
 </script>
 
@@ -326,15 +464,6 @@ const generateNew = () => {
   font-size: 0.95em;
 }
 
-.debug-info {
-  margin-top: 10px;
-  padding: 10px;
-  background: #f0f0f0;
-  border-radius: 6px;
-  font-size: 0.9em;
-  color: #666;
-}
-
 .output-section {
   margin-top: 30px;
   padding: 25px;
@@ -344,40 +473,101 @@ const generateNew = () => {
   animation: fadeIn 0.5s ease;
 }
 
-.output-section h2 {
+.output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.output-header h2 {
   color: #333;
   font-size: 1.4rem;
+  margin: 0;
+}
+
+.output-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stat-badge {
+  padding: 6px 12px;
+  background: white;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 500;
+  color: #555;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .output-content {
   background: white;
   padding: 25px;
   border-radius: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   line-height: 1.7;
   font-size: 1.05em;
+  white-space: pre-wrap;
+  border: 1px solid #e0e0e0;
 }
 
-.output-actions {
+.export-actions {
+  padding-top: 20px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.export-actions h3 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.2rem;
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
 .action-btn {
-  padding: 10px 20px;
-  border: 2px solid #667eea;
+  padding: 15px;
+  border: 2px solid #e0e0e0;
   background: white;
-  color: #667eea;
-  border-radius: 6px;
+  color: #333;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-color: #667eea;
+}
+
+.action-btn.primary {
+  border-color: #667eea;
   background: #667eea;
   color: white;
+}
+
+.action-btn.primary:hover {
+  background: #5a6fd8;
+  border-color: #5a6fd8;
 }
 
 .action-btn.secondary {
@@ -390,18 +580,23 @@ const generateNew = () => {
   color: white;
 }
 
+.btn-icon {
+  font-size: 1.2em;
+}
+
 .loading-state {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
+  z-index: 10;
 }
 
 .spinner {
@@ -411,7 +606,13 @@ const generateNew = () => {
   border-top: 4px solid #667eea;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.loading-state p {
+  color: #333;
+  font-size: 1.1em;
+  font-weight: 500;
 }
 
 @keyframes spin {
