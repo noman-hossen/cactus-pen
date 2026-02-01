@@ -33,6 +33,7 @@ import OptionsDropdowns from './components/OptionsDropdowns.vue'
 import GenerateButton from './components/GenerateButton.vue'
 import ErrorMessage from './components/ErrorMessage.vue'
 import GeneratorOutput from './components/GeneratorOutput.vue'
+import LoadingState from './components/LoadingState.vue'
 </script>
 
 <style>

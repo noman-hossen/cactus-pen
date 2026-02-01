@@ -1,16 +1,27 @@
 {
-  "name": "ai-paragraph-backend",
+  "name": "ai-paragraph-writer",
+  "version": "1.0.0",
+  "description": "Full-stack AI paragraph generation application",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
-    "start": "bun run src/index.ts"
+    "dev": "bun run dev --workspace=backend & bun run dev --workspace=frontend",
+    "dev:backend": "bun run dev --workspace=backend",
+    "dev:frontend": "bun run dev --workspace=frontend",
+    "build": "bun run build --workspace=backend && bun run build --workspace=frontend",
+    "start": "bun run start --workspace=backend"
   },
-  "dependencies": {
-    "@hono/node-server": "^1.13.1",
-    "hono": "^4.7.2",
-    "openai": "^4.71.1"
-  },
-  "devDependencies": {
-    "@types/bun": "^1.1.14",
-    "typescript": "^5.5.4"
-  }
+  "keywords": [
+    "ai",
+    "content-generation",
+    "paragraph-writer",
+    "vue",
+    "hono",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT"
 }
