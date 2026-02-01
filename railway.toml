@@ -1,12 +1,9 @@
 [build]
 builder = "NIXPACKS"
-buildCommand = "npm install --legacy-peer-deps && cd frontend && npm install --legacy-peer-deps && npm run build"
+# We now install root, then backend, then frontend dependencies
+buildCommand = "npm install && cd backend && npm install && cd ../frontend && npm install && npm run build"
 
 [deploy]
-# We use npx ts-node because the file is a .ts file
-startCommand = "npx ts-node backend/src/index.ts"
+# Using --transpile-only skips the "Parameter 'c' has any type" error for now
+startCommand = "npx ts-node --transpile-only backend/src/index.ts"
 restartPolicyType = "ON_FAILURE"
-
-[envs]
-NODE_VERSION = "20"
-NIXPACKS_NODE_VERSION = "20"

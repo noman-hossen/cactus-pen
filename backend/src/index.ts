@@ -15,7 +15,7 @@ app.use('/*', cors({
 }));
 
 // Health check
-app.get('/', (c) => {
+app.get('/', (c: any) => {
   const hfKeyLoaded = !!process.env.HF_API_KEY;
   return c.json({
     status: 'ok',
