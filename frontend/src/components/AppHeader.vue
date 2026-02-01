@@ -250,6 +250,7 @@ export default {
   
   .app-title {
     font-size: 1.3rem;
+    margin-left: 1.2em;
   }
   
   .logo-svg {

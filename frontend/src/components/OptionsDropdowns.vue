@@ -90,7 +90,7 @@ const store = useGeneratorStore()
   color: var(--text-dark);
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231a2a24' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='16' fill='%231a2a24' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 16px;
@@ -176,7 +176,7 @@ const store = useGeneratorStore()
   
   .dropdown {
     padding: 14px;
-    font-size: 15px;
+    font-size: 11px;
   }
 }
 
@@ -188,7 +188,7 @@ const store = useGeneratorStore()
   
   .dropdown {
     padding: 12px;
-    font-size: 14px;
+    font-size: 12px;
     background-position: right 8px center;
   }
   
