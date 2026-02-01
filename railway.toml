@@ -1,11 +1,10 @@
 [build]
 builder = "NIXPACKS"
-# Updated 'cd client' to 'cd frontend'
 buildCommand = "npm install --legacy-peer-deps && cd frontend && npm install --legacy-peer-deps && npm run build"
 
 [deploy]
-# If your main server file is inside the backend folder, use this:
-startCommand = "node backend/src/index.js"
+# We use npx ts-node because the file is a .ts file
+startCommand = "npx ts-node backend/src/index.ts"
 restartPolicyType = "ON_FAILURE"
 
 [envs]
