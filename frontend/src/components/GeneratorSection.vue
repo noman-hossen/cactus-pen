@@ -197,7 +197,7 @@ const loading = ref(false)
 const showOutput = ref(false)
 const error = ref('')
 
-const API_URL = 'http://localhost:3000/api/generate'
+const API_URL = 'https://cactus-pen.onrender.com/api/generate'
 
 // Computed properties
 const wordCountDisplay = computed(() => {

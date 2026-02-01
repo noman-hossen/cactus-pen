@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api/generate'
+const API_URL = 'https://cactus-pen.onrender.com/api/generate'
 
 export async function generateParagraph(data) {
   const response = await fetch(API_URL, {

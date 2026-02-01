@@ -6,7 +6,7 @@ const app = new Hono();
 
 // Enable CORS
 app.use('/*', cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  origin: ['https://cactus-pen.onrender.com'],
   allowHeaders: ['Content-Type'],
   allowMethods: ['POST', 'GET', 'OPTIONS'],
   exposeHeaders: ['Content-Length'],

@@ -15,7 +15,7 @@ export const useGeneratorStore = defineStore('generator', () => {
   const error = ref('')
 
   // API URL
-  const API_URL = 'http://localhost:3000/api/generate'
+  const API_URL = 'https://cactus-pen.onrender.com/api/generate'
 
   // Getters (computed)
   const wordCountDisplay = computed(() => {
@@ -23,52 +23,65 @@ export const useGeneratorStore = defineStore('generator', () => {
   })
 
   // Actions
-  async function generateContent() {
-    error.value = ''
-    result.value = ''
-    showOutput.value = false
-    
-    if (!topic.value.trim()) {
-      error.value = 'Please enter a topic'
-      return
-    }
-
-    loading.value = true
-
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          topic: topic.value,
-          context: context.value,
-          contentType: contentType.value,
-          tone: tone.value,
-          difficulty: difficulty.value,
-          wordCount: wordCount.value
-        })
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.message || `HTTP error ${response.status}`)
-      }
-
-      if (data.success) {
-        result.value = data.result
-        showOutput.value = true
-      } else {
-        error.value = data.message || 'Failed to generate content'
-      }
-
-    } catch (err) {
-      console.error('Error:', err)
-      error.value = `Error: ${err.message}. Make sure the backend server is running.`
-    } finally {
-      loading.value = false
-    }
+  const generateContent = async () => {
+  error.value = ''
+  result.value = ''
+  showOutput.value = false
+  
+  if (!topic.value.trim()) {
+    error.value = 'Please enter a topic'
+    return
   }
+
+  loading.value = true
+
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        topic: topic.value,
+        context: context.value,
+        contentType: contentType.value,
+        tone: tone.value,
+        difficulty: difficulty.value,
+        wordCount: wordCount.value
+      })
+    })
+
+    // Get the raw response text first
+    const responseText = await response.text()
+    
+    // Try to parse as JSON
+    let data
+    try {
+      data = JSON.parse(responseText)
+    } catch (parseError) {
+      console.error('Failed to parse JSON:', responseText)
+      throw new Error(`Server returned invalid JSON: ${responseText.substring(0, 100)}...`)
+    }
+
+    if (!response.ok) {
+      throw new Error(data.message || data.error || `HTTP error ${response.status}`)
+    }
+
+    if (data.success) {
+      result.value = data.result
+      showOutput.value = true
+    } else {
+      error.value = data.message || 'Failed to generate content'
+    }
+
+  } catch (err) {
+    console.error('Error:', err)
+    error.value = `Error: ${err.message}. Please check the backend server.`
+  } finally {
+    loading.value = false
+  }
+}
 
   async function copyToClipboard() {
     try {
