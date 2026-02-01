@@ -1,8 +1,13 @@
 [build]
 builder = "NIXPACKS"
-buildCommand = "npm install && cd client && npm install && npm run build"
+# We add --legacy-peer-deps to skip the "matches" error if your dependencies are old
+buildCommand = "npm install --legacy-peer-deps && cd client && npm install --legacy-peer-deps && npm run build"
 
 [deploy]
-startCommand = "node server/index.js" # Change index.js to your main server file name
+startCommand = "node server/index.js"
 restartPolicyType = "ON_FAILURE"
-healthcheckPath = "/"
+
+[envs]
+# This forces Railway to use a modern, supported Node version
+NODE_VERSION = "20"
+NIXPACKS_NODE_VERSION = "20"
