@@ -1,0 +1,17 @@
+HTTP/1.1 500 Internal Server Error
+Date: Sun, 01 Feb 2026 14:53:30 GMT
+Content-Type: application/json
+Transfer-Encoding: chunked
+Connection: keep-alive
+CF-RAY: 9c7247557d550645-DAC
+access-control-allow-credentials: true
+access-control-expose-headers: Content-Length
+rndr-id: 75228442-c59c-4acb
+vary: Origin
+vary: Accept-Encoding
+x-render-origin-server: Render
+cf-cache-status: DYNAMIC
+Server: cloudflare
+alt-svc: h3=":443"; ma=86400
+
+{"success":false,"message":"JSON Parse error: Expected '}'"}

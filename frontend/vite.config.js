@@ -4,7 +4,10 @@ import { fileURLToPath, URL } from 'node:url'
 import favicon from 'vite-plugin-favicon'
 
 export default defineConfig({
-  plugins: [vue(), favicon('./public/logo.png')],
+  plugins: [vue(), favicon({
+      source: 'src/assets/logo.png', // Source image for generation
+      appName: 'Cactus-pen',
+    })],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
