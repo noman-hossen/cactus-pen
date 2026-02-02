@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="logo-container">
-      <img src="../assets/cactus-pen-logo.svg" alt="Cactus Pen Logo" class="logo-svg">
+      <img src="../assets/logo.png" alt="Cactus Pen Logo" class="logo-svg">
       <span class="app-title">Cactus-Pen</span>
     </div>
 

@@ -2,7 +2,7 @@
   <footer class="app-footer">
     <div class="footer-main">
       <div class="footer-brand">
-        <img src="../assets/cactus-pen-logo.svg" alt="Cactus Pen Logo" class="footer-logo">
+        <img src="../assets/cactus-pen-logo.png" alt="Cactus Pen Logo" class="footer-logo">
         <span class="footer-title">Cactus-Pen</span>
       </div>
       
