@@ -19,7 +19,6 @@ export function copyToClipboard(text) {
 }
 
 export function downloadPDF(text, filename = 'cactuspen-output') {
-  // PDF generation logic here (simplified)
   const blob = new Blob([text], { type: 'text/plain' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')

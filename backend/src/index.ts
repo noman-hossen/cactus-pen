@@ -15,7 +15,7 @@ app.use('/*', cors({
 }));
 
 // Health check
-app.get('/', (c: any) => {
+app.get('/ping', (c: any) => {
   const hfKeyLoaded = !!process.env.HF_API_KEY;
   return c.json({
     status: 'ok',
@@ -25,10 +25,9 @@ app.get('/', (c: any) => {
   });
 });
 
-// Mount the generate route
+
 app.route('/api', generate);
 
-// Start server
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 console.log(`Server starting on port ${port}...`);

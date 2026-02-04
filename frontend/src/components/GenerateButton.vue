@@ -68,7 +68,7 @@ const store = useGeneratorStore()
 }
 
 .generate-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 </style>

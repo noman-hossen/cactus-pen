@@ -9,7 +9,7 @@ app.post('/generate', async (c) => {
     
     // Accept both "topic" and "prompt" for compatibility
     const topic = body.topic || body.prompt;
-    const { contentType = 'paragraph', tone = 'academic', wordCount = 250 } = body;
+    const { contentType = 'paragraph', tone = 'academic', wordCount = 100 } = body;
 
     if (!topic || typeof topic !== 'string' || topic.trim().length === 0) {
       return c.json(
@@ -20,7 +20,7 @@ app.post('/generate', async (c) => {
 
     console.log(`Generating ${contentType} about: "${topic}"`);
 
-    // Build the prompt using your EXACT structure
+    // Promt
     const prompt = `write a ${contentType} about ${topic} around ${wordCount} words in a ${tone} tone`;
 
     console.log('Sending prompt to AI:', prompt);

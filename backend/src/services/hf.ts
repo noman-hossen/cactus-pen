@@ -49,7 +49,6 @@
     model: string,
     maxTokens?: number
   ): Promise<string> {
-    // For gpt2 and similar models, use inference API
     if (model.includes('gpt2') || model.includes('gpt-neo') || model.includes('DialoGPT')) {
       return this.useInferenceAPI(prompt, model, maxTokens);
     }

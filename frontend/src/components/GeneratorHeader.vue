@@ -1,12 +1,12 @@
 <template>
   <div class="generator-header">
-    <h1>Generate Paragraphs with AI</h1>
-    <p class="subtitle">Enter a topic and generate AI text.</p>
+    <h1> ✨<span class="wr">Writing part</span> with AI</h1>
+    <p class="subtitle">Type, Generate & Export....</p>
   </div>
 </template>
 
 <script setup>
-// No props needed, just static content
+
 </script>
 
 <style scoped>
@@ -24,9 +24,11 @@
   margin-bottom: 8px;
   font-size: 2.2rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: ;
 }
-
+.wr {
+  color: #7c9947;
+}
 .subtitle {
   color: var(--text-muted);
   font-size: 1.1rem;
