@@ -1,10 +1,4 @@
-﻿import { Hono } from 'hono';
-import { cors } from 'hono/cors';
-import generate from './routes/generate';
-
-const app = new Hono();
-
-// Enable CORS
+﻿
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import generate from './routes/generate';
