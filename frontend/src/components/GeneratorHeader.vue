@@ -22,6 +22,7 @@
 
 .generator-header h1 {
   margin-bottom: 8px;
+  margin: 1rem 3rem ;
   font-size: 2.2rem;
   font-weight: 700;
   color: var(--text-dark);
@@ -42,6 +43,12 @@
   
   .subtitle {
     font-size: 1rem;
+  }
+}
+@media(max-width: 480px){
+  .generator-header h1 {
+    font-size: 1.5rem;
+    margin: auto ;
   }
 }
 </style>
