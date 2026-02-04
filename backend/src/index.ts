@@ -5,14 +5,28 @@ import generate from './routes/generate';
 const app = new Hono();
 
 // Enable CORS
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import generate from './routes/generate';
+
+const app = new Hono();
+
+// FIX: Update CORS to allow Vercel
 app.use('/*', cors({
-  origin: ['https://cactus-pen.onrender.com'],
-  allowHeaders: ['Content-Type'],
-  allowMethods: ['POST', 'GET', 'OPTIONS'],
+  origin: [
+    'https://cactus-pen.onrender.com',
+    'https://cactus-pen.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
+  allowHeaders: ['Content-Type', 'Authorization'],
+  allowMethods: ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE'],
   exposeHeaders: ['Content-Length'],
   maxAge: 600,
   credentials: true,
 }));
+
+// Rest of your code remains the same...
 
 // Health check
 app.get('/', (c: any) => {
