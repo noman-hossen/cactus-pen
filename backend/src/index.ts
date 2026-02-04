@@ -30,9 +30,12 @@ app.get('/', (c: any) => {
   });
 });
 
-// GET health endpoint for UptimeRobot (works with HEAD too)
+// Simple HEAD endpoint - Render free tier compatible
 app.get('/health', (c: any) => {
-  // Return empty response with 200 status
+  // This handles both GET and HEAD automatically in newer Hono versions
+  if (c.req.method === 'HEAD') {
+    return new Response(null, { status: 200 });
+  }
   return c.body(null, 200);
 });
 
@@ -44,7 +47,7 @@ const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 console.log(`Server starting on port ${port}...`);
 console.log(`HF_API_KEY loaded: ${!!process.env.HF_API_KEY}`);
-console.log(`Health endpoint: GET /health`);
+console.log(`Health endpoint: HEAD /health`);
 
 // Export the app for Bun to serve
 export default {
