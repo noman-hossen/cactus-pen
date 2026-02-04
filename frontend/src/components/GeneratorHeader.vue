@@ -1,7 +1,7 @@
 <template>
   <div class="generator-header">
-    <h1>Generate Paragraphs with AI</h1>
-    <p class="subtitle">Enter a topic and generate AI text.</p>
+    <h1><span class="wr">✨Writing Part</span> with AI</h1>
+    <p class="subtitle">Type, generate, and Export in seconds....</p>
   </div>
 </template>
 
@@ -32,7 +32,9 @@
   font-size: 1.1rem;
   margin-bottom: 20px;
 }
-
+.wr{
+  color: #399c39;
+}
 @media (max-width: 768px) {
   .generator-header h1 {
     font-size: 1.8rem;
