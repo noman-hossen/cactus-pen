@@ -1,10 +1,19 @@
+
 <template>
+  <!-- Toast Messages - placed BEFORE the conditional so they're always in DOM -->
+  <div v-if="toasts.showGenerated" class="toast toast-success">
+    <i class="fas fa-check-circle"></i>
+    <span>✅ Content generated!</span>
+  </div>
+  
+  <div v-if="toasts.showCopied" class="toast toast-success">
+    <i class="fas fa-copy"></i>
+    <span>📋 Copied to clipboard!</span>
+  </div>
+  
+  <!-- Output Section -->
   <div v-if="store.showOutput" class="output-section">
     <div class="output-card">
-      <div class="output-header">
-        <h1 class="main-title">Generated..!</h1>
-      </div>
-      
       <div class="content-section">
         <h2 class="content-name">{{ store.topic }}</h2>
         
@@ -51,20 +60,116 @@
 </template>
 
 <script setup>
+import { ref, watch, reactive } from 'vue'
 import { useGeneratorStore } from '@/stores/generatorStore'
 
 const store = useGeneratorStore()
 
+// Simple toast state
+const toasts = reactive({
+  showGenerated: false,
+  showCopied: false
+})
+
+// Show generated toast when content appears
+watch(() => store.showOutput, (newVal) => {
+  if (newVal && store.result) {
+    showGeneratedToast()
+  }
+})
+
+const showGeneratedToast = () => {
+  toasts.showGenerated = true
+  setTimeout(() => {
+    toasts.showGenerated = false
+  }, 3000) // Show for only 1 second
+}
+
 const handleCopy = async () => {
   const success = await store.copyToClipboard()
   if (success) {
-    // Using a simple alert, but consider a toast component later
-    alert('✅ Copied to clipboard!')
+    toasts.showCopied = true
+    setTimeout(() => {
+      toasts.showCopied = false
+    }, 1000) // Show for only 1 second
   }
 }
 </script>
 
 <style scoped>
+/* Toast Styles - Updated for bottom position and 1 second duration */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10000;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease, fadeOut 0.3s ease 0.7s forwards;
+  font-weight: 600;
+  min-width: 250px;
+  text-align: center;
+  justify-content: center;
+}
+
+.toast-success {
+  background: linear-gradient(135deg, #10b981, #0da271);
+  color: white;
+  border: 2px solid #059669;
+}
+
+.toast i {
+  font-size: 1.3em;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Mobile toast */
+@media (max-width: 768px) {
+  .toast {
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    transform: none;
+    min-width: auto;
+    padding: 10px 16px;
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
 /* Color Palette */
 :root {
   --primary-dark: #0aecd0;
