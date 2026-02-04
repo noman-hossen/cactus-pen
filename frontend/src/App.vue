@@ -1,22 +1,21 @@
+
 <template>
   <div class="app">
     <AppHeader />
     
     <div class="app-container">
+      <!-- Generator Section (Input/Controls) -->
       <div class="generator-wireframe">
         <GeneratorHeader />
-        
         <TopicInput />
-        
         <OptionsDropdowns />
-        
         <GenerateButton />
-        
         <ErrorMessage />
-        
+      </div>
+      
+      <!-- Output Section (Separate card below) -->
+      <div class="output-container">
         <GeneratorOutput />
-        
-        <LoadingState />
       </div>
     </div>
     
@@ -33,7 +32,6 @@ import OptionsDropdowns from './components/OptionsDropdowns.vue'
 import GenerateButton from './components/GenerateButton.vue'
 import ErrorMessage from './components/ErrorMessage.vue'
 import GeneratorOutput from './components/GeneratorOutput.vue'
-import LoadingState from './components/LoadingState.vue'
 </script>
 
 <style>
@@ -72,8 +70,7 @@ html, body {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-background: #ffb88e;
-
+  background: #ffb88e;
   min-height: 100vh;
   padding: 40px;
   color: var(--text-dark);
@@ -89,9 +86,10 @@ background: #ffb88e;
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 30px; /* Space between sections */
 }
 
-/* Matches wireframe exactly */
+/* Generator Section Styling */
 .generator-wireframe {
   max-width: 800px;
   margin: auto;
@@ -99,12 +97,24 @@ background: #ffb88e;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+/* Output Container - Separate from generator */
+.output-container {
+  max-width: 800px;
+  margin: auto;
+  width: 100%;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   body {
     padding: 20px;
+  }
+  
+  .app-container {
+    gap: 20px;
   }
   
   .generator-wireframe {
@@ -116,6 +126,10 @@ background: #ffb88e;
 @media (max-width: 480px) {
   body {
     padding: 15px;
+  }
+  
+  .app-container {
+    gap: 15px;
   }
   
   .generator-wireframe {

@@ -22,7 +22,7 @@
 
 .generator-header h1 {
   margin-bottom: 8px;
-  margin: 1rem 3rem ;
+  margin: 1rem 2.8rem ;
   font-size: 2.2rem;
   font-weight: 700;
   color: var(--text-dark);
@@ -32,6 +32,7 @@
   color: var(--text-muted);
   font-size: 1.1rem;
   margin-bottom: 20px;
+  margin-left: 1rem;
 }
 .wr{
   color: #399c39;
