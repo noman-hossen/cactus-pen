@@ -1,9 +1,12 @@
 {
   "name": "ai-paragraph-backend",
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
-    "start": "bun run src/index.ts"
-  },
+    "dev": "bun --env-file=.env run --watch src/index.ts",
+    "start": "bun --env-file=.env run src/index.ts",
+    "test": "bun test"
+  }
+
+  ,
   "dependencies": {
     "@hono/node-server": "^1.13.1",
     "dotenv": "^17.2.3",
