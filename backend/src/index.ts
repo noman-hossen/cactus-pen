@@ -1,4 +1,4 @@
-﻿import 'dotenv/config';
+﻿import 'dotenv/config';  // THIS MUST BE THE FIRST LINE
 
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
