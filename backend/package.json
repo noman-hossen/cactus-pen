@@ -2,7 +2,7 @@
   "name": "ai-paragraph-backend",
   "scripts": {
     "dev": "bun --env-file=.env run --watch src/index.ts",
-    "start": "cd backend && bun run src/index.ts",
+    "start": " bun run src/index.ts",
     "test": "bun test"
   }
   ,
