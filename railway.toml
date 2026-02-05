@@ -1,9 +1,7 @@
 [build]
 builder = "NIXPACKS"
-# We now install root, then backend, then frontend dependencies
-buildCommand = "npm install && cd backend && npm install && cd ../frontend && npm install && npm run build"
+buildCommand = "cd backend && bun install"
 
 [deploy]
-# Using --transpile-only skips the "Parameter 'c' has any type" error for now
-startCommand = "npx ts-node --transpile-only backend/src/index.ts"
+startCommand = "cd backend && bun run src/index.ts"
 restartPolicyType = "ON_FAILURE"
